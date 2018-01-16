@@ -14,4 +14,8 @@ class Stock extends Model {
     public function manufacturer () {
         return $this->belongsTo(Manufacturer::class);
     }
+
+    public function getPriceAttribute ($price) {
+        return $price / 100;
+    }
 }

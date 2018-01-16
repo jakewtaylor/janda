@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class PracticeCollection extends ResourceCollection {
+class StockCollection extends ResourceCollection {
     public function toArray ($request) {
         return [
             'error' => false,

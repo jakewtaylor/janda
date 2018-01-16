@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Brand;
-use App\Http\Resources\{ Brand as BrandResource, BrandCollection };
-use App\Http\Requests\{ CreateBrandRequest, UpdateBrandRequest };
+use App\{ Brand, Stock };
+use App\Http\Resources\{
+    Brand as BrandResource,
+    BrandCollection,
+    StockCollection
+};
+use App\Http\Requests\{ CreateBrandRequest, UpdateBrandRequest, CreateBrandStockRequest };
 use Illuminate\Http\Request;
 
 use App\Classes\ErrorResponder;
@@ -37,6 +41,17 @@ class BrandController extends Controller {
     // GET /brands/{brand}
     public function show (Brand $brand) {
         return BrandResource::make($brand);
+    }
+
+    // GET /brands/{brand}/stock
+    public function showStock (Brand $brand) {
+        $stock = $brand->stock()->with(['manufacturer', 'brand'])->get();
+        return StockCollection::make($stock);
+    }
+
+    // POST /brands/{brand}/stock
+    public function storeStock (CreateBrandStockRequest $request, Brand $brand) {
+
     }
 
     // PATCH /brands/{brand}

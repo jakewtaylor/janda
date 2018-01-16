@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\Resource;
 
-class Brand extends Resource {
+class Manufacturer extends Resource {
     public function toArray ($request) {
         return [
             'id' => $this->id,

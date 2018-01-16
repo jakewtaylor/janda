@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
 
 class Handler extends ExceptionHandler {
     /**
@@ -44,11 +45,20 @@ class Handler extends ExceptionHandler {
      * @return \Illuminate\Http\Response
      */
     public function render ($request, Exception $exception) {
-        if ($exception instanceof ModelNotFoundException && $request->expectsJson()) {
-            return response()->json([
-                'error' => true,
-                'reason' => 'Could not find model.',
-            ], 404);
+        if ($request->expectsJson()) {
+            if ($exception instanceof ModelNotFoundException) {
+                return response()->json([
+                    'error' => true,
+                    'reason' => 'Could not find model.',
+                ], 404);
+            }
+
+            if ($exception instanceof ValidationException) {
+                return response()->json([
+                    'error' => true,
+                    'errors' => $exception->errors(),
+                ]);
+            }
         }
         return parent::render($request, $exception);
     }
