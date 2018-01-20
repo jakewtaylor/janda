@@ -39,6 +39,7 @@ class Kernel extends HttpKernel {
         'api' => [
             'throttle:60,1',
             'bindings',
+            \App\Http\Middleware\JsonOnly::class,
         ],
 
         'jwt.auth' => [\Tymon\JWTAuth\Middleware\GetUserFromToken::class],
