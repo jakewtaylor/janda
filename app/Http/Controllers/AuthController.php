@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Auth\{ LoginRequest, CheckTokenRequest };
 
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
@@ -29,6 +29,26 @@ class AuthController extends Controller {
         return response()->json([
             'success' => true,
             'token' => $token,
+        ]);
+    }
+
+    public function checkToken (CheckTokenRequest $request) {
+        $jwt = $request->getJwt();
+
+        try {
+            JWTAuth::setToken($jwt)->authenticate();
+        } catch (\Exception $e) {
+            return response()->json([
+                'valid' => false,
+                'exception' => $e->getMessage(),
+            ]);
+        }
+
+        $freshToken = JWTAuth::refresh(JWTAuth::getToken());
+
+        return response()->json([
+            'valid' => true,
+            'freshToken' => $freshToken,
         ]);
     }
 }
