@@ -1,0 +1,21 @@
+// This is just resets and necessary global styles
+// most styling is done in JS using aphrodite
+
+@import url('https://fonts.googleapis.com/css?family=Heebo:900|Roboto:400,700|Material+Icons');
+
+*, *:before, *:after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body, #root {
+    height: 100%;
+    min-height: 100vh;
+    font-family: 'Roboto', sans-serif;
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: 'Heebo', sans-serif;
+    font-weight: 900,
+}

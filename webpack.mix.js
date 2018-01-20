@@ -1,4 +1,5 @@
-let mix = require('laravel-mix');
+const path = require('path');
+const mix = require('laravel-mix');
 
 /*
  |--------------------------------------------------------------------------
@@ -11,5 +12,17 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/assets/js/app.js', 'public/js')
-   .sass('resources/assets/sass/app.scss', 'public/css');
+mix.disableNotifications()
+    .webpackConfig({
+        resolve: {
+            alias: {
+                '@redux': path.resolve(__dirname, './resources/assets/js/redux'),
+                '@utils': path.resolve(__dirname, './resources/assets/js/utils'),
+                '@config': path.resolve(__dirname, './resources/assets/js/config'),
+                '@components': path.resolve(__dirname, './resources/assets/js/components'),
+            },
+        },
+    })
+    .sass('resources/assets/scss/style.scss', 'public/css')
+    .react('resources/assets/js/index.js', 'public/js')
+    .sourceMaps()
